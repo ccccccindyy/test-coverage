@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CustomerHandler.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">1.0</a> &gt; <a href="index.source.html" class="el_package">logic</a> &gt; <span class="el_source">CustomerHandler.kt</span></div><h1>CustomerHandler.kt</h1><pre class="source lang-java linenums">package logic
+
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import data.Customer
+import data.OfficeLocation
+import utils.Constants
+import utils.Constants.Companion.INVITE_RADIUS
+import utils.Util
+
+<span class="fc" id="L11">class CustomerHandler (private val inputFile: String, private val outputFile: String,</span>
+                       private val sphereRadius: Double, private val inviteRadius: Double) :
+    Handler&lt;Customer&gt;, Filter&lt;Customer&gt;{
+
+    override fun handleParsingResult(result: ArrayList&lt;Customer&gt; ): ArrayList&lt;Customer&gt; {
+<span class="fc bfc" id="L16" title="All 2 branches covered.">        val filterResult = ArrayList(result.filter { isInRange(it) })</span>
+<span class="fc" id="L17">        filterResult.sortBy { it.userId }</span>
+<span class="fc" id="L18">        return filterResult</span>
+    }
+
+    override fun parsingJSONObjects(): ArrayList&lt;Customer&gt; {
+<span class="fc" id="L22">        return ArrayList(Util.readJSON(inputFile).map {  Gson().fromJson(it, data.Customer::class.java) })</span>
+    }
+
+    override fun isInRange(item: Customer): Boolean {
+<span class="fc bfc" id="L26" title="All 2 branches covered.">       return Util.calculateDistance(item.sphereLocation(), OfficeLocation.sphereLocation, sphereRadius) &lt;= inviteRadius</span>
+    }
+
+    fun getInviteList() {
+<span class="fc" id="L30">        val gson: Gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create()</span>
+<span class="fc" id="L31">        Util.writeResult(gson.toJson(handleParsingResult(parsingJSONObjects())), outputFile)</span>
+<span class="fc" id="L32">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

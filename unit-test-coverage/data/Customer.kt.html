@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Customer.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">1.0</a> &gt; <a href="index.source.html" class="el_package">data</a> &gt; <span class="el_source">Customer.kt</span></div><h1>Customer.kt</h1><pre class="source lang-java linenums">package data
+
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
+
+
+<span class="nc" id="L7">data class Customer(</span>
+<span class="nc" id="L8">    var latitude: Double?,</span>
+<span class="pc" id="L9">    var longitude: Double?, @Expose @SerializedName(&quot;user_id&quot;) var userId: Int?, @Expose val name: String?</span>
+) {
+
+    fun sphereLocation(): SphereLocation {
+<span class="nc bnc" id="L13" title="All 4 branches missed.">        return SphereLocation(latitude ?: 0.0, longitude ?: 0.0)</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
